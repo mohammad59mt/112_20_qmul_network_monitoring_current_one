@@ -1,0 +1,299 @@
+%\documentclass[twocolumn]{article}
+%\usepackage[utf8]{inputenc}
+%\documentclass[10pt,journal,onecolumn]{IEEEtran}
+%\documentclass[10pt,journal,compsoc]{IEEEtran}
+\documentclass[10pt, journal, letterpaper]{IEEEtran}
+%\documentclass[10pt,journal,compsoc]{IEEEtran}
+
+% NB hyperref package may need to be commented for Latex upload
+\usepackage{cite}
+%\ifCLASSOPTIONcompsoc
+%\ifCLASSINFOpdf
+% \usepackage[pdftex]{graphicx}
+% declare the path(s) where your graphic files are
+% \graphicspath{{../pdf/}{../jpeg/}}
+% and their extensions so you won't have to specify these with
+% every instance of \includegraphics
+% \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
+%  \usepackage[nocompress]{cite}
+%  \else
+% normal IEEE
+%  \usepackage{cite}
+%  \fi
+
+%  \ifCLASSINFOpdf
+
+%  \else
+%\fi
+%important package
+\usepackage{multirow} 
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage{rotating}
+\usepackage{kantlipsum} %with the next two command (commath, allowdisplaybreaks) -> allow to break the formulas along the pages
+\usepackage{commath}
+\allowdisplaybreaks
+\usepackage{mathtools}  %with the next command adjust the vertical space between formulas
+%\setlength{\jot}{5pt}
+%\usepackage{ragged2e}   %if add \justify at each line, that line would be justified. This is used because the abstract of transaction style is not justified  ---- it is not compatible with twocolumn-IEEETrans
+%not important
+\usepackage{verbatim}
+\usepackage{xr-hyper} 
+\usepackage{enumitem}
+\usepackage{multirow}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{array,arydshln}
+\usepackage{graphicx,booktabs}
+\usepackage{longtable}
+%strikethrough not working when nested in a definition
+%\usepackage[normalem]{ulem}
+%\usepackage{soul}
+%\usepackage{fullpage} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% hyperref package may need to be commented for Latex upload
+%\usepackage[pdfusetitle, pdfauthor={Michael Shell, My institution}]{hyperref}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{balance}
+\usepackage{flushend}
+\usepackage{epstopdf}
+\usepackage{wrapfig}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amsmath} %[cmex10]
+%\usepackage{flushend} %********************* This package has a bug: Do no include it
+\usepackage{graphicx}
+\usepackage{latexsym}
+\usepackage{booktabs}
+\usepackage[style=base]{caption}
+\usepackage{subcaption} %******************* This package has conflict with sufig and subfigure
+%\usepackage{subfigure}
+%\usepackage{subfig}
+\usepackage{breqn}
+\newtheorem{thm}{Property}
+\newtheorem{thm1}{Theorem}
+\newtheorem{thm3}{Proposition}
+\newtheorem{thm5}{Remark}
+\newtheorem{thm7}{Lemma}
+\algnewcommand\algorithmicinput{\textbf{INPUT:}}
+\algnewcommand\INPUT{\item[\algorithmicinput]}
+\algnewcommand\algorithmicoutput{\textbf{OUTPUT:}}
+\algnewcommand\OUTPUT{\item[\algorithmicoutput]}
+\usepackage[table]{xcolor}
+%\usepackage[dvipsnames]{xcolor}
+%\usepackage[cmyk]{xcolor}
+%\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{enumitem,kantlipsum}
+\usepackage{adjustbox}
+
+\newlength\mylength
+\setlength\mylength{\dimexpr.13\columnwidth-1\tabcolsep-0.2\arrayrulewidth\relax}
+\usepackage{color}
+% we need a better fix for this, see https://tex.stackexchange.com/questions/64298/error-with-xcolor-package
+\colorlet{BLUE}{blue}
+\usepackage{colortbl}
+\definecolor{LightCyan}{RGB}{155, 227, 247}
+%\captionsetup[figure]{belowskip=-8pt}
+%in test
+
+%\usepackage{nomencl}
+%\makenomenclature
+%% This code creates the groups
+% -----------------------------------------
+%\usepackage{etoolbox}
+%\renewcommand\nomgroup[1]{%
+%	\item[\bfseries
+%	\ifstrequal{#1}{P}{Parameters}{%
+%		\ifstrequal{#1}{V}{Variables}{%
+%			\ifstrequal{#1}{I}{Indices}{%
+%				\ifstrequal{#1}{B}{Binary~Variables}{}}}}%
+%	]}
+
+% To remove all comments, comment out the definition and use the commented-out
+% empty definition below
+% otherwise you can comment the line \commentsontrue 
+\newcommand{\commentBy}[3]{\textcolor{#1}{\textbf{#2:} #3}}
+%\newcommand{\commentBy}[3]{\ignorespaces}
+
+\newif\ifcommentson
+%uncomment the line below to show comments
+%\commentsontrue
+
+%\newcommand{\ss}[1]{\ifcommentson \commentBy{green}{SS}{#1} \fi}
+%\newcommand{\lc}[1]{\ifcommentson \commentBy{blue}{LC}{#1} \fi}
+%\newcommand{\mm}[1]{\ifcommentson \commentBy{orange}{MM}{#1} \fi}
+
+\newif\ifextended
+\newif\ifshortver
+
+%%% Show only short version in black
+%%%        \shorvetrue 
+%%%        %\extendedtrue 
+
+%%% Show only extended version in black
+%%%        %\shorvetrue 
+%%%        \extendedtrue 
+
+%%% Show short version in blue and extended version in purple
+%%%        \shorvetrue 
+%%%        \extendedtrue 
+
+\shortvertrue
+%\extendedtrue
+
+\newcommand{\extended}[1]{\ifextended \ifshortver \textcolor{purple}{#1} \else \textcolor{black}{#1} \fi  \fi}
+\newcommand{\shortver}[1]{\ifshortver \ifextended \textcolor{blue}{#1} \else \textcolor{black}{#1} \fi \fi}
+
+%\newcommand{\optional}[1]{#1}
+%\newcommand{\optional}[1]{\textcolor{Orange}{#1}}
+\newcommand{\optional}[1]{\ignorespaces}
+
+
+\newif\ifrevisionactive
+\newif\ifshowdeleted
+\revisionactivetrue
+%\showdeletedtrue
+
+\newcommand{\revised}[1]{\ifrevisionactive \textcolor{blue}{#1} \else \textcolor{black}{#1} \fi}
+
+%\newcommand{\deleted}[1]{\ifrevisionactive \ifshowdeleted \textcolor{red}{\sout{#1}} \else \fi \fi}
+\newcommand{\deleted}[1]{\ifrevisionactive \ifshowdeleted \textcolor{orange}{#1} \else \fi \fi}
+
+
+% correct bad hyphenation here
+\hyphenation{net-works fa-ci-li-ta-tes fa-ci-li-ta-te mo-ni-to-ring par-ti-cu-lar pe-ri-o-di-cal-ly mi-ni-mi-zing va-ria-tions de-li-ve-red per-ri-o-di-cal-ly}
+
+
+\begin{document}
+\title{Active Monitoring for Virtual Environments: Delay Measurement in SDN-based Virtual Networks}
+\author{}
+%\date{October 2018}
+	\maketitle	
+	\begin{abstract}
+\end{abstract}	
+	\begin{IEEEkeywords} 
+	XXX.
+	\end{IEEEkeywords}
+
+\section{Introduction}
+Nowadays delay-sensitive traffic (e.g., video streaming, VNF re-placement) widely presents in most of the networks. These types of traffic, due to its bandwidth requirements, causes a high increase of traffic over the networks, making more difficult to manage and optimize the network performance. Furthermore, for video streaming is critical to have good network performance in order to provide QoS and guarantee an adequate QoE for the final user. Therefore, traffic modelling has a great interest. In this context, SDN based networks offers many advantages for video streaming over the network. Control panel and data panel are separated in SDN, offering a powerful solution to manage traffic network, instead of standard switching or routing decides how to forward packets. The SDN Controller gets statistics and other parameters from SDN switches. With this information it is possible to know the status of the network, i.e., link utilization, link capabilities, packets being transmitted, paths to destinations, etc. Specifically, controlling and modifying the network and video streamed parameters, the QoE and QoS required values can be provided.
+
+\textbf{Goal}: 
+\begin{enumerate}
+    \item Measuring Delay Matrix (DL),
+    \item Keeping the monitoring overhead below a predefined threshold,
+    \item Keeping the measurement in network level, i.e., not to engage all servers/clients,
+    \item Active monitoring by means of exploiting the SDN capabilities to dynamically monitor DL. To this end, we define a number of monitoring flows (probes) and provide them with special routes. These flows and routes must be selected in a way that makes it possible to dynamically measure DL by just having the end-to-end delay of probes,
+\end{enumerate}  
+\begin{enumerate}
+    \item Answer to "Is the network load balanced?"; Specially when we have a new load balancing protocol applied. Link utilization is not a good metric since utilization may be low in average while the packet loss is high (caused by burst traffic). As an example, the author of the \cite{benson2012new} analyzed the traffic of several datacentres and find that in some datacentres, losses occur on the links that are lightly utilized on average\cite{benson2012new}.
+    \item Answer to "Where should we add capacity to the network?"
+    \item \textbf{Can we use this algorithm to increase security aspects of network?}
+\end{enumerate}
+
+\noindent \textbf{Application}: 
+\begin{enumerate}
+    \item SLA-aware traffic engineering: DL and PL matrices are invaluable inputs to do QoS-aware traffic engineering. Considering the central resource administration of SDN networks, flows can be routed via low delay and packet loss links using these metrics. There are lots of works using network statistics to provide a SLA-based route such as \cite{tajiki2017optimal,kamoun2018ip,lin2018dte}. 
+    \item Network troubleshooting and diagnostic: due to distributed nature of networks, troubleshooting is extremely hard. Many failures are considered as network ''problems" while they are not. Researches show that about 50$\%$ of these “network” problems are not caused by the network~\cite{guo2015pingmesh}. However it is not easy to tell if a “network” problem is indeed caused by network failures or not.
+    \item Multi-objective Resource Allocation: in some resource management scenarios, the network controller should do a cross layer resource allocation, e.g., in \cite{tajiki2018energy} the problem of traffic engineering and VNF placement are considered as a unique problem to minimize the network energy consumption while the flows receive services based on SLA agreement. This means that the controller can exploit the aforementioned matrices to provide a better services and simultaneously minimizes the energy consumption.
+    \item Providing a platform for clients of virtual network providers to validate if the provider meets the SLA.
+    \item Learning Network Behaviour.
+\end{enumerate}
+
+\noindent \textbf{Current Solutions Challenges}:\\
+End host based solutions:
+\begin{itemize}
+    \item How to handle multiple links (link bundle) along two switches?
+    \item How to handle multiple path along two switches (e.g, if using ECMP)?
+    \item How to change all end hosts (possibility and cost)? Host-based methods such as MPTCP are challenging to deploy because network operators often do not control the end-host stack (e.g., in a public cloud) and even when they do, some high performance applications (such as low latency storage systems [39, 7]) bypass the kernel and implement their own transport.
+\end{itemize}
+Network based solutions:\\
+\begin{itemize}
+    \item It is hard or impossible to gain the mentioned Goals by just E2E monitoring (without chasing links state)
+    \item (related to load balancing and TE) Transport independent: As a network mechanism, desired load balancing algorithm must be oblivious to the transport protocol at the end-host (TCP, UDP, etc). Importantly, it should not require any modifications to TCP.
+\end{itemize}
+Link utilization is not a good metric since a link utilization may be low in average but the packet loss over that link has a significant value (caused by burst traffic).\\
+Lots of current approaches gather information from switches but what if a faulty switch sends faulty responses?
+
+
+\noindent \textbf{Approach}: Mathematical formulation of the problem, and maybe, proposing heuristic algorithm to solve the problem.
+
+\noindent \textbf{Methodology}: To have an accurate measurement send $x^t$ flows on each link, thereafter, calculate the mean and coefficient of variation.
+
+\noindent \textbf{Constraint}:Prevent the monitoring flows from gaining more than a predefined bandwidth ratio.
+
+\noindent \textbf{Challenge}: To have a solvable multi-variables multi-equations problem, the length of each path should be less than a predefined value.\\
+
+\section{Related Works}
+There are some papers and protocols focusing on PL/DL measurement. Pingmesh~\cite{guo2015pingmesh} is among the most famous one which is applied to Microsoft data centres (DCs). Pingmesh was designed in response to the following questions: 
+\begin{enumerate}[leftmargin=*]
+    \item "Can we get network latency between any two servers at any time in DC networks?" \cite{guo2015pingmesh}
+    \item "The collected latency data can then be used to address a series of challenges: telling if an application perceived latency issue is caused by the network or not, defining and tracking network service level agreement (SLA), and automatic network troubleshooting."\cite{guo2015pingmesh}
+\end{enumerate}
+Although Pingmesh is a practical and interesting work, it suffers from two main issues:
+\begin{enumerate}[leftmargin=*]
+    \item It needs all servers to be engaged in the monitoring meaning that every server runs a Pingmesh Agent. Therefore, this approach is not applicable to networks that are unable to access all servers. In other words, Pingmesh is neither applicable outside of DC concept nor within DCs with limited access to servers.
+    \item Pingmesh is a troubleshooting tool which measures the between-servers end-to-end DL/PL. To this end, Pingmesh leverages all the servers to launch TCP or HTTP pings to provide the maximum latency measurement coverage. Obviously, it uses existing routes between servers, therefore, it does not have the potential to be used as a monitoring tool in traffic engineering. This is because (1) different traffic flows between two specified servers may have different routes and (2) in Pingmesh, results depend on the assigned routes to the ping flows while during traffic engineering we need to create these routes.
+\end{enumerate}
+    
+The RFC~\cite{mizrahi2015loss} defines protocols for Loss Measurement and for Delay Measurement in TRILL networks. "TRILL [TRILL] is a protocol for transparent least-cost routing, where Routing Bridges (RBridges) route traffic to their destination based on least cost, using a TRILL encapsulation header with a hop count." "The Loss Measurement protocol measures packet loss between two RBridges. The measurement is performed by sending a set of synthetic packets and counting the number of packets transmitted and received during the test." Similarly, "the Delay Measurement protocol measures the packet delay and packet delay variation between two RBridges. The measurement is performed using time stamped OAM messages." Hence, this RFC is not applicable for other types of running protocols. Besides, it is proper for network troubleshooting but not traffic engineering.
+Sharon et al.~\cite{goldberg2015path} designed a monitoring protocol that raises an alarm when the packet loss rate exceed a threshold on a pre-defined path. As mentioned, this solution focus on existing path between each sender and receiver, therefore, it is a troubleshooting tool and cannot be used for estimation of PL/DL matrices.
+The authors of~\cite{salonidis2015device} proposed a solution to measure channel loss and collision loss ratio in random access networks. This solution is not scalable and needs to add special monitoring devices to the network.
+
+Reference \cite{sommers2017automatic},   work are to provide a critical, expanded perspective on measurement results and to improve the opportunity for repro- ducibility of results. We instantiate our framework in a tool we call SoMeta, which monitors the local environment during active probe-based measurement experiments. We evaluate the runtime costs of SoMeta and conduct a series of experiments in which we intentionally perturb di erent aspects of the local environment during active probe-based measurements. Our experiments show how simple local monitoring can readily expose conditions that bias active probe-based measurement results. We conclude with a discussion of how our framework can be expanded to provide metadata for a broad range of Internet measurement experiments \cite{sommers2017automatic}.
+
+\begin{table*}[t]
+\scalebox{.77}{
+    \centering
+    \begin{tabular}
+    %{|c|c|c|c|c|c|c|c|c|c|c|c|}
+    {|p{\mylength}|c|c|p{\mylength}|c|p{\mylength+45pt}|p{\mylength+45pt}|p{\mylength}|p{\mylength}|p{\mylength+45pt}|p{\mylength}|p{\mylength+75pt}|}
+    \hline
+         Ref. & HW & Host & E2E/ Link/ flow & Dly & Loss & Thrghpt & New rules & RTT/ OWT & Network & loc & ED\\\hline\hline
+         \cite{ettinger2007pinpoint}& No & Some hosts & Link & No & Yes & No & No & - & WAN/ Internet & - &  \\\hline
+         \cite{zeng2012automatic}& No & Some hosts & Link & No & No & No & No & - & Static Network & Yes & \\\hline
+         \cite{yaseen2018synchronized}& No & No & Link & No & No & At a single pint in time & No & - & P4-enabled & No & Provides a snapshot\\\hline
+         \cite{huang2018sketchlearn}& No & No & E2E & No & No & Yes & No & - & P4-enabled or OpenVswitch modification & No & Finds flows frequency and infer based on that\\\hline
+         \cite{dhamdhere2018inferring}& No & Some hosts & Link & No & Detect (no measurement) & No & No & - & Inter-ISP & Yes & Searches for long persistent congestion in inter-ISP links\\\hline
+        \cite{yang2018elastic} & Optional & No & flow & No & No & Yes & No & - & P4-enabled OR add hardware & No & Available bandwidth, packet rate, and flow size\\\hline
+         &  &  &  &  &  &  &  &  &  &  & \\\hline
+    \end{tabular}
+    }
+    \label{tab:comparison}
+   \caption{\small Hrdwr: requires special hardware? Host: engage the end host? E2E/Link: end-to-end measurement or per link/switch measurement? Dly: measure delay; Loss: measure packet loss; Thrghpt: Measure link/switch throughput; New rules: add new rules to the forwarding tables; RTT/OWT: Round Trip Time or One-Way trip Time? Network: what is the working environment? Localization: detect fault/failure location; ED: extra description.}
+ \end{table*}
+    
+    
+    \cite{zeng2012automatic}:  Networks are getting larger and more complex; yet administrators rely on rudimentary tools such as ping and traceroute to debug problems. We propose an automated and systematic approach for testing and debugging networks called “Automatic Test Packet Generation” (ATPG). ATPG reads router configurations and generates a device-independent model. The model is used to generate a minimum set of test packets to (minimally) exercise every link in the net- work or (maximally) exercise every rule in the network. Test packets are sent periodically, and detected failures trigger a separate mechanism to localize the fault. ATPG can detect both functional (e.g., incorrect firewall rule) and performance problems (e.g., congested queue). ATPG complements but goes beyond earlier work in static checking (which cannot detect liveness or performance faults) or fault localization (which only localize faults given liveness results). We describe our prototype ATPG implementation and results on two real-world data sets: Stanford University’s backbone network and Internet2. We find that a small number of test packets suffices to test all rules in these net- works: For example 4000 packets can cover all rules in Stan- ford backbone network while 54 is enough to cover all links. Sending 4000 test packets 10 times per second consumes less than 1$\%$ of link capacity. ATPG code and the data sets are publicly available1. 
+    As with all testing methodologies, ATPG has limitations: 1) Dynamic boxes: ATPG cannot model boxes whose in- ternal state can be changed by test packets. For example, a NAT that dynamically assigns TCP ports to outgoing pack- ets can confuse the online monitor as the same test packet can give different results. 2) Non-deterministic boxes: Boxes can load-balance packets based on a hash function of packet fields, usually combined with a random seed; this is common in multipath routing such as ECMP. When the hash algorithm and parameters are unknown, ATPG can- not properly model such rules. However, if there are known packet patterns that can iterate through all possible out- puts, ATPG can generate packets to traverse every output. 3) Invisible rules: A failed rule can make a backup rule active, and as a result no changes may be observed by the test packets. This can happen when, despite a failure, a test packet is routed to the expected destination by other rules. In addition, an error in a backup rule cannot be de- tected in normal operation. Another example is when two drop rules appear in a row: the failure of one rule is unde- tectable since the effect will be masked by the other rule. 4) Transient network states: ATPG cannot uncover errors whose lifetime is shorter than the time between each round of tests. For example, congestion may disappear before an available bandwidth probing test concludes. Finer-grained test agents are needed to capture abnormalities of short du- ration. 5) Sampling: ATPG uses sampling when generat- ing test packets. As a result, ATPG can miss match faults since the error is not uniform across all matching headers. In the worst case (when only one header is in error), exhaustive testing is needed.\cite{zeng2012automatic}
+
+
+\subsection{Interesting Text}
+\textcolor{red}{@Mohammad: Mahdi jan, ina yekam baram matn ha namafhuman. ya eslah konim ya drop.}
+Today, ten Autonomous Systems (ASes) alone contribute 70$\%$ of the traffic [20], whereas in 2007 it took thousands of ASes to add up to this share [15]. This consolidation of content largely stems from the rise of streaming video, which now constitutes the majority of traffic in North America [23]. This video traffic requires both high throughput and has soft real-time latency demands, where the quality of delivery can impact user experience [6].\cite{schlinker2017engineering}
+
+Most datacenters still use Equal Cost Multi-Path (ECMP), which performs congestion-oblivious hashing of  ows over multiple paths, leading to an uneven distribution of traffic. Alternatives to ECMP come with deployment challenges, as they require either changing the tenant VM network stacks (e.g., MPTCP) or replacing all of the switches (e.g., CONGA)
+
+We can use link delay matrix to do a dynamic and more efficient flowlet routing.
+
+2 hob segment routing is as good as pure segment routing\cite{bhatia2015optimized}
+
+Use this monitoring technique to monitor Virtual Networks. How can cloud operators monitor VNET performance, given black-box tenants? Can physical tools [9, 12, 18] be usefully adapted to virtualized networks?
+(2) How accurate are adapted monitors within virtualized envi- ronments? Can they detect customer-impacting faults? Do they exhibit high precision and recall?
+(3) Beyond monitoring, how do virtual environments impact fault management? How might we triage which layer of the network is resposible for a fault? How are fault diagnosis, root-causing and mitigation impacted?
+[2018-Sigcomm-Cloud Data center ...]
+
+In virtual network monitoring, VNET pingmesh shows the e2e latency so they add the servers latency into consideration. while for system upgrading and stuff like network measuring we just want to know the links and queuing delay of network. Additionally, by them, we cannot undersand the hight latency is caused by servers or network congestion.
+
+Hence the Pingmesh Controller needs to be fault-tolerant and scalable. We use Software Load-Balancer (SLB) [14] to provide fault-tolerance and scalability for the Pingmesh Controller. See [9, 14] for the details of how SLB works. [2015-sigcom-pingmesh]
+
+In this section, we introduce how Pingmesh helps detect switch silent packet drops. When silent packet drops happen, the switches for various reasons do not show information about these packet drops and the switches seem innocent. But applications suffer from increased latency and packet drops. How to quickly identify if an ongoing live-site incident is caused by switch silent packet drops therefore becomes critical. In the past, we have identified two types of switch silent packet drops: packet black-hole and silent random packet drops.
+
+\cite{yaseen2018synchronized} "When monitoring a network, operators rarely have a  ne- grained and complete view of the network’s state. Instead, today’s network monitoring tools generally only measure a single device or path at a time; whole-network metrics are a composition of these independent measurements, i.e., an afterthought. Such tools fail to fully answer a wide range of questions. Is my load balancing algorithm taking advantage of all available paths evenly? How much of my network is concurrently loaded? Is application traffic synchronized? These types of concurrent network behavior are challenging to capture at  ne granularity as they involve coordination across the entire network. At the same time, understanding them is essential to the design of network switches, architectures, and protocols."\cite{yaseen2018synchronized}
+
+	\bibliographystyle{IEEEtran}
+\bibliography{references}
+\end{document}
