@@ -214,7 +214,7 @@ Several applications can benefit from the knowledge of LDV or RT-LDV, among them
 
 % There are two main approaches to measure the delay vector: end host based solutions and network based solutions. In the first group, the end host will engaged in the process of network monitoring. Contrary, network based solutions keep the host untouched and do the measurement inside the network. Most of current solutions have several challenges to hit the goal, e.g., How to handle multiple links (link bundle) along two switches? How to handle multiple path along two switches (e.g, if using ECMP)? What is the possibility and cost to change end hosts (in cased on using Host-based solutions)?\\
 % Host-based methods are challenging to deploy because network operators often do not control the end-host stack (e.g., in a public cloud). Our main goal through out this paper is divided into five parts: 
-There are several questions on how to measure the delay vector, e.g., how to handle multiple links (link bundles) along two networking nodes? How to handle multiple paths between two nodes (e.g, if using ECMP)? What is the possibility and the cost to change end-hosts (i.e. in case of using Host-based solutions to perform LDV measurements)? Shall hosts be engaged in the process of network monitoring (\cite{guo2015pingmesh})? or is it better to keep the hosts untouched and do the measurements inside the network? Our main goals in this paper can be expressed as follows: 
+There are several questions on how to measure the delay vector, e.g., how to handle multiple links (link bundles) along two networking nodes? How to handle multiple paths between two nodes (e.g, if using ECMP)? What is the possibility and the cost to change end-hosts (i.e. in case of using Host-based solutions to perform LDV measurements)? Shall hosts be engaged in the process of network monitoring (\cite{guo2015pingmesh})? or is it better to keep the hosts untouched and do the measurements inside the network? Throughout the remaining sections, we answer the above-mentioned questions. Our main goals in this paper can be expressed as follows: 
 \begin{itemize}
 \item Measuring the Link Delay Vector (LDV). 
 \item Keeping the monitoring overhead below a predefined threshold. 
@@ -222,10 +222,10 @@ There are several questions on how to measure the delay vector, e.g., how to han
 \item Being dynamic and providing real-time monitoring. %Active monitoring by means of exploiting the SDN capabilities to dynamically monitor LDV. To this end, we define a number of monitoring flows and provide them with special routes. These flows and routes must be selected in a way that makes it possible to dynamically measure LDV by just having the end-to-end delay of flows. 
 \item Developing an efficient implementation of the proposed solution and offering it as a tool for other researchers.
 \end{itemize}
-To meet the above goals, we propose an Active Network Monitoring Architecture called Efficient Link Delay Measurement (ELDM). The proposed architecture, provides real-time delay measurements for SDN-based networks. We consider that the routing devices are SDN-enabled so that we can impose the routing of the monitoring flows (flows injected to the network to perform LDV measurement). In our approach, the end-to-end delay of a set of monitoring flows is measured and based on that information, per-link delay (which is the sum of processing, transmission, queuing and propagation delays) is inferred. More precisely, we mathematically formulate the problem of choosing a set of monitoring flows to be injected to the network so that the link delay vector can be inferred using the delays measured on the injected flows. The formulation is in form of Integer Linear Programming (ILP) and could be solved with existing tools like those listed in~\cite{wikipedia_2020_listOptimization_software}. However, in order to cope with the high computational complexity of optimizing an ILP problem, a heuristic algorithm is proposed to solve the problem in a real-time manner. Thereafter, several flows are injected to the network and their end-to-end delays are measured. The number of flows and the selected path for each of them should be chosen in a way that by solving a system of linear equations the delays of desired links could be specified. It is important to prevent the monitoring flows from using more than a predefined fraction of the link capacity. To have a solvable multi-variables multi-equations problem, none of the flows delays should be inferable from the delay of one or more of other flows\footnote{To have a unique solution when there are n-unknowns, we need n-equations that are not inferable from each other.}. Besides, the path length (i.e. hop count) of each monitoring flow should be less than a predefined value to keep the measurement accurate.
-
+It should be mentioned that there are many challenges around LDV measurement problem, however, we believe these goals are the high priority ones.
+To meet the above goals, we propose a novel Active Network Monitoring Architecture called Efficient Link Delay Measurement (ELDM). The proposed architecture, provides real-time delay measurements for SDN-based networks. We consider that the routing devices are SDN-enabled so that we can impose the routing of the monitoring flows (flows injected to the network to perform LDV measurement). In other words, we facilitate the process of active monitoring in SDN through this architecture. The same way, SDN facilitates the process of network management by its architecture. In our approach, the end-to-end delay of a set of monitoring flows is measured and based on that information, per-link delay (which is the sum of processing, transmission, queuing and propagation delays) is inferred. More precisely, we mathematically formulate the problem of choosing a set of monitoring flows to be injected to the network so that the link delay vector can be inferred using the delays measured on the injected flows. The formulation is in form of Integer Linear Programming (ILP) and could be solved with existing tools like those listed in~\cite{wikipedia_2020_listOptimization_software}. However, in order to cope with the high computational complexity of optimizing an ILP problem, a heuristic algorithm is proposed to solve the problem in a real-time manner. Thereafter, several flows are injected to the network and their end-to-end delays are measured. The number of flows and the selected path for each of them should be chosen in a way that by solving a system of linear equations the delays of desired links could be specified. It is important to prevent the monitoring flows from using more than a predefined fraction of the link capacity. To have a solvable multi-variables multi-equations problem, none of the flows delays should be inferable from the delay of one or more of other flows\footnote{To have a unique solution when there are n-unknowns, we need n-equations that are not inferable from each other.}. Besides, the path length (i.e. hop count) of each monitoring flow should be less than a predefined value to keep the measurement accurate\footnote{Different probes are traversing links in different time stamps and the links' delays are fluctuating. Therefore, increasing the length of paths may cause a tiny inconsistency in the measured values. As we are using meta-heuristic, this inconsistency will be tolerated, however, keeping the length of the paths low will decrease the chance of these types of inconsistency.}.
 In brief, the contributions of this paper are as follows:
-\begin{itemize}[leftmargin=*]
+\begin{itemize}
     \item An active network monitoring architecture is proposed. The architecture provides a real-time delay measurement for SDN-based networks;
     \item  We measure per-link delay (which includes propagation and queuing delays);
     \item We mathematically formulate the joint problems of node placement and flow selection for active network monitoring. To this end, three metrics are optimized: length of monitoring flows, monitoring overhead, and accuracy;
@@ -281,7 +281,13 @@ There are several other works~\cite{zhang2020joint, zhang2019sensitive, yaseen20
 
 % Link state measurement is the fundamental part of routing control and has received wide attention in research community. However, due to the massive number of network nodes, it is considerably expensive to measure the network timely. In this work, we propose LTSM, a lightweight and time sliced measurement approach for link state to reduce the measurement cost. In LTSM, the measurement tasks are assigned to all nodes evenly and launched at proper time. 
 
-The authors of \cite{gao2016accurate} focus on the problem of extracting per-hop delay for each packet from end-to-end delay. They propose a per link delay measurement by mathematically formulating the problem into a set of optimization sub-problems. Their solution adds an overhead header to every packet to construct the constraints of the optimization problems. By solving these optimization problems applying a relaxation, their solution is able to estimate the per-hop delays as well as giving an upper and lower bound for each link delay. This solution not only adds a lot of overhead but also has an issue that is clock synchronization. Because of that the authors of \cite{nakanishi2018route} study synchronization-free delay measurement. In this way, they uses theoretical analysis to cancel or minimize the error factors caused by clock asynchronism. However, removing or reducing this error ends up to a very high computational complexity which makes the algorithm hard to be applied for real-world networks. Besides, they have some considerations which rarely stands for real-world networks. In our work, we use loops to overcome with the clock synchronization and exploit SDN capabilities to reduce computational complexity and monitoring overheads.
+The authors of \cite{gao2016accurate} focus on the problem of extracting per-hop delay for each packet from the end-to-end delay. They propose a per-link delay measurement by mathematically formulating the problem into a set of optimization sub-problems. Their solution adds an overhead header to every packet to construct the constraints of the optimization problems. By applying a relaxation and solving these optimization problems, their solution is able to estimate per-hop delays as well as giving an upper and lower bound for each link delay. This solution not only adds a lot of overhead but also has clock synchronization issue. Because of that the authors of \cite{nakanishi2018route} study synchronization-free delay measurement. In this way, they use theoretical analysis to cancel or minimize the error factors caused by clock asynchronism. However, removing or reducing this error ends up to a very high computational complexity which makes the algorithm hard to be applied for real-world networks. Besides, they have some considerations which rarely stands for real-world networks. It is worth mentioning that although we are seeking to solve the same problem \cite{gao2016accurate}~and~\cite{nakanishi2018route} are trying to, the solutions/approaches are completely different, i.e., our work is not an extension of these works. In our work, we use loops to overcome with the clock synchronization issue. Besides, we exploit SDN capabilities to propose a low overhead solution (no need to add extra headers).
+
+% Both \cite{gao2016accurate}~and~\cite{nakanishi2018route} are suffering from additional overhead caused by the extra header they add to all packets. 
+
+
+
+
 
 \section{Active Delay Measurement}
 In this section, we first depict an outline of the approach we have taken along with the challenges on the way. Fig.~\ref{fig:challenges} shows three main steps of the proposed solution and the corresponding issues of each step. 
@@ -426,7 +432,7 @@ In order to simplify the understanding of the notation, a sample of the proposed
     \infty & \infty & d_{(5,3)} & d_{(5,4)} & \infty
   \end{bmatrix}\]
   
-The source and destination of flows are determined by the vectors $s^f$ and $d^f$ determine, respectively. In the proposed solution source and destination of a flow can be the same. Clearly this ends up to a loop in the routing path which is handled in our implementation. Except loops caused by equal source and destination, the other types of loops are not allowed (due to implementation limits). Matrix $A_{(i,j)}$ denotes whether a link from switch $i$ to switch $j$ exists or not. If there is a link then its value is 1 otherwise, 0. $x^t$: In each time slot, exactly $x^t$ monitoring flows travel through the link $(i,j)$. Matrices $R^f_{(i,j)}$ and $P^f_{(i,j)}$ denote the path selected for every monitoring flow. $R^f_{(i,j)}$, the main output of this formulation, shows the steps taken from source to destination without specifying the order. As an example, let the source and destination of flow~1 be node one and node five respectively. 
+The source and destination of flows are determined by the vectors $s^f$ and $d^f$ determine, respectively. In the proposed solution source and destination of a flow can be the same. Clearly this ends up to a loop in the routing path which is handled in our implementation (later on we will explain why loops may happen in this section). Except loops caused by equal source and destination, the other types of loops are not allowed (due to implementation limits). Matrix $A_{(i,j)}$ denotes whether a link from switch $i$ to switch $j$ exists or not. If there is a link then its value is 1 otherwise, 0. $x^t$: In each time slot, exactly $x^t$ monitoring flows travel through the link $(i,j)$. Matrices $R^f_{(i,j)}$ and $P^f_{(i,j)}$ denote the path selected for every monitoring flow. $R^f_{(i,j)}$, the main output of this formulation, shows the steps taken from source to destination without specifying the order. As an example, let the source and destination of flow~1 be node one and node five respectively. 
 \[R^1=
   \begin{bmatrix}
     0 & 1 & 0 & 0 & 0\\
@@ -877,7 +883,7 @@ The average of the remaining values is calculated to be used in DVC algorithm.
 \section{Evaluation}\label{sec:evaluation}
 %Is this paper we use Abilene topology provided by Topologyzoo~\cite{topologyzoo} dataset as our topology. 
 % Fig.~\ref{fig:abilene_topology_topologyzoo} represents the topology graph that contains geographically distributed switches. 
-We use Mininet~\cite{kaur2014mininet} as emulation tool, Floodlight as the SDN-controller, and Python as the programming language. The topology used to evaluate the proposed solution is Abilene~\cite{topologyzoo}. To run our prototype, we consider there are a few randomly-placed hosts, as monitoring nodes. %We evaluate our work with different numbers of monitoring nodes %\textcolor{red}{Nodes (Please apply it consistently elsewhere)}% 
+We use Mininet~\cite{kaur2014mininet} as emulation tool, Floodlight as the SDN-controller, and Python as the programming language. The typologies used to evaluate the proposed solution are Abilene and RedIRIS~\cite{topologyzoo}. To run our prototype, we consider there are a few randomly-placed hosts, as monitoring nodes. %We evaluate our work with different numbers of monitoring nodes %\textcolor{red}{Nodes (Please apply it consistently elsewhere)}% 
 %from 1 to 5. 
 % \begin{figure}
 %     \centering
@@ -904,16 +910,28 @@ We use Mininet~\cite{kaur2014mininet} as emulation tool, Floodlight as the SDN-c
 \subsection{Monitoring Coverage}\label{subsec:eval_coverage}
 Fig.~\ref{fig:eval_Abilene_Max_Length_of_Routes_Links_Monitored}, shows the coverage of different scenarios versus the maximum length of monitoring flows (MLMF). Based on the simulation results, there is a direct relationship between MLMF, number of monitoring nodes, and the measurement coverage. Increasing the number of monitoring nodes increases the chance of having full coverage using flows with a lower length. As an example, with five monitoring nodes, all links delays can be measured with flows of length lower than 6 hops; While this value is 12 for the scenario where there is only one monitoring node.
 On the other hand, allowing MLMF to increase, reduces the number of required monitoring nodes to reach full coverage. 
-\begin{figure}[!b]
-    \centering
-    \includegraphics[width=0.8\columnwidth]{img/eval_Abilene_Max_Length_of_Routes_Links_Monitored.png}
-    \caption{Monitoring Coverage}
-    \label{fig:eval_Abilene_Max_Length_of_Routes_Links_Monitored}
+
+\begin{figure}
+    \begin{subfigure}{\columnwidth}
+       \centering
+        \includegraphics[width=0.8\columnwidth]{img/eval_Abilene_Max_Length_of_Routes_Links_Monitored.png}
+        \caption{}
+        \label{fig:eval_Abilene_Max_Length_of_Routes_Links_Monitored}
+    \end{subfigure}
+    \begin{subfigure}{\columnwidth}
+      \centering
+      \includegraphics[width=\columnwidth]{img/eval_Red_link_delay_real_and_measured.png}
+     \caption{RE.}
+     \label{fig:eval_RedIris_Max_Length_of_Routes_Links_Monitored}
+    \end{subfigure}
+    \caption{Monitoring Coverage.}
+    \label{fig:real_delay_abile}
 \end{figure}
+
 It should be mentioned that having a relatively high MLMF (in this example 11), all links could be monitored with a few number of monitoring nodes (in this example, one monitoring node). However, this is not desirable because increasing MLMF may increase the optimality gap or configuration overhead. On the other hand, increasing the number of monitoring nodes above a number where a relatively low MLMF covers all links, is not necessary. This is because after this point, increasing the number of monitoring flow only increases the complexity of algorithm. 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\columnwidth]{img/eval_bar_min_length_of_routes_with_different_monitoring_nodes.png}
+    \includegraphics[width=0.8\columnwidth]{img/eval_Abilene_bar_min_length_of_routes_with_different_monitoring_nodes.png}
     \caption{Minimum MLMF for full coverage}
     \label{fig:bar_min_MLMF_full_cover}
 \end{figure}
@@ -954,18 +972,18 @@ Similarly, Fig.~\ref{fig:max_error_abilen} presents maximum error among all moni
     \caption{Max error per link.}
     \label{fig:max_error_abilen}
 \end{figure}
-Fig.~\ref{fig:real_delay_abile}, provides a closer look to per link delay accuracy with different number of monitoring flows. This plot shows the measured delay using 1-5 monitoring nodes versus the delay configured in Mininet for every link. The real-delay is considered to be the delay we assigned to a link when creating the topology in Mininet. As discussed earlier, the higher the number of monitoring nodes, the better the measurement. It is worth mentioning that although the accuracy of one-monitoring node scenario is higher than the accuracy of two-monitoring nodes scenario in some links, the overall accuracy of two-monitoring nodes is higher.
+Fig.~\ref{fig:real_delay_abile}, provides a closer look to per-link delay accuracy with a different number of monitoring flows. This plot shows the measured delay using 1-5 monitoring nodes versus the delay configured in Mininet for every link. As we have IPerf generating traffic in the background, we do not consider delay assigned to a link when creating the topology in Mininet. Instead, ping\footnote{Since we are emulating our solution on Mininet, the measurement accuracy should be equal or bigger than ms (ping has this accuracy).} is used to measure every link delays (by having a host connected to each switches). As discussed earlier, the higher the number of monitoring nodes, the better the measurement. It is worth mentioning that although the accuracy of one-monitoring node scenario is higher than the accuracy of two-monitoring nodes scenario in some links, the overall accuracy of two-monitoring nodes is higher. 
 
 \begin{figure}
     \begin{subfigure}{\columnwidth}
       \centering
-      \includegraphics[width=\columnwidth]{img/eval_link_delay_real_and_measured_part_14_1.png}
+      \includegraphics[width=\columnwidth]{img/eval_Abilene_link_delay_real_and_measured.png}
       \caption{links 1-14.}
       \label{fig:real_delay_abile_p1}
     \end{subfigure}
     \begin{subfigure}{\columnwidth}
       \centering
-      \includegraphics[width=\columnwidth]{img/eval_link_delay_real_and_measured_part_14_2.png}
+      \includegraphics[width=\columnwidth]{img/eval_Abilene_link_delay_real_and_measured.png}
      \caption{links 15-28.}
      \label{fig:real_delay_abile_p2}
     \end{subfigure}
@@ -1001,7 +1019,7 @@ When the number of monitoring nodes increases, the number of monitoring flows in
 Finally, fig.~\ref{fig:eval_barchart_Average_Percent_of_Rules_to_Switch_Rule_Capacity_Ratio_max_len_of_route_11} represent the network overhead of the proposed monitoring solution. In this plot, the average number of monitoring rules per switch versus the number of monitoring nodes are represented using left y-axis while the right y-axis shows the percentage of monitoring rules over the total capacity of the switches. Increasing the number of monitoring flows increases the network overhead, however, the percentage of the monitoring rules over the total capacity of the switch in the worse case is $0.3\%$ which is negligible.
 \begin{figure}
     \centering
-    \includegraphics[width=\columnwidth]{img/eval_barchart_Average_Percent_of_Rules_to_Switch_Rule_Capacity_Ratio_max_len_of_route_11.png}
+    \includegraphics[width=\columnwidth]{img/eval_Abilene_barchart_Average_Percent_of_Rules_to_Switch_Rule_Capacity_Ratio_max_len_of_route_11.png}
     \caption{Monitoring Overhead - Average number of rules per switch, MLMF=11}
     \label{fig:eval_barchart_Average_Percent_of_Rules_to_Switch_Rule_Capacity_Ratio_max_len_of_route_11}
 \end{figure}
