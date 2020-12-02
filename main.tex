@@ -908,24 +908,24 @@ We use Mininet~\cite{kaur2014mininet} as emulation tool, Floodlight as the SDN-c
 % \end{table}
 
 \subsection{Monitoring Coverage}\label{subsec:eval_coverage}
-Fig.~\ref{fig:eval_Abilene_Max_Length_of_Routes_Links_Monitored}, shows the coverage of different scenarios versus the maximum length of monitoring flows (MLMF). Based on the simulation results, there is a direct relationship between MLMF, number of monitoring nodes, and the measurement coverage. Increasing the number of monitoring nodes increases the chance of having full coverage using flows with a lower length. As an example, with five monitoring nodes, all links delays can be measured with flows of length lower than 6 hops; While this value is 12 for the scenario where there is only one monitoring node.
+Fig.~\ref{fig:Max_Length_of_Routes_Links_Monitored}, shows the coverage of different scenarios versus the maximum length of monitoring flows (MLMF). Based on the simulation results, there is a direct relationship between MLMF, number of monitoring nodes, and the measurement coverage. Increasing the number of monitoring nodes increases the chance of having full coverage using flows with a lower length. As an example, with five monitoring nodes, all links delays can be measured with flows of length lower than 5 hops (in both topologies); While this value is 12 for the scenario where there is only one monitoring node.
 On the other hand, allowing MLMF to increase, reduces the number of required monitoring nodes to reach full coverage. 
 
 \begin{figure}
     \begin{subfigure}{\columnwidth}
        \centering
         \includegraphics[width=0.8\columnwidth]{img/eval_Abilene_Max_Length_of_Routes_Links_Monitored.png}
-        \caption{}
+        % \caption{Abilene}
         \label{fig:eval_Abilene_Max_Length_of_Routes_Links_Monitored}
     \end{subfigure}
     \begin{subfigure}{\columnwidth}
       \centering
-      \includegraphics[width=\columnwidth]{img/eval_Red_link_delay_real_and_measured.png}
-     \caption{RE.}
+      \includegraphics[width=0.8\columnwidth]{img/eval_Rediris_Max_Length_of_Routes_Links_Monitored.png}
+    %  \caption{RedIRIS}
      \label{fig:eval_RedIris_Max_Length_of_Routes_Links_Monitored}
     \end{subfigure}
     \caption{Monitoring Coverage.}
-    \label{fig:real_delay_abile}
+    \label{fig:Max_Length_of_Routes_Links_Monitored}
 \end{figure}
 
 It should be mentioned that having a relatively high MLMF (in this example 11), all links could be monitored with a few number of monitoring nodes (in this example, one monitoring node). However, this is not desirable because increasing MLMF may increase the optimality gap or configuration overhead. On the other hand, increasing the number of monitoring nodes above a number where a relatively low MLMF covers all links, is not necessary. This is because after this point, increasing the number of monitoring flow only increases the complexity of algorithm. 
