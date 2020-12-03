@@ -908,7 +908,7 @@ We use Mininet~\cite{kaur2014mininet} as emulation tool, Floodlight as the SDN-c
 % \end{table}
 
 \subsection{Monitoring Coverage}\label{subsec:eval_coverage}
-Fig.~\ref{fig:Max_Length_of_Routes_Links_Monitored}, shows the coverage of different scenarios versus the maximum length of monitoring flows (MLMF). Based on the simulation results, there is a direct relationship between MLMF, number of monitoring nodes, and the measurement coverage. Increasing the number of monitoring nodes increases the chance of having full coverage using flows with a lower length. As an example, with five monitoring nodes, all links delays can be measured with flows of length lower than 5 hops (in both topologies); While this value is 12 for the scenario where there is only one monitoring node.
+Fig.~\ref{fig:Max_Length_of_Routes_Links_Monitored}, shows the coverage of different scenarios versus the maximum length of monitoring flows (MLMF). Based on the simulation results, there is a direct relationship between MLMF, number of monitoring nodes, and the measurement coverage. Increasing the number of monitoring nodes increases the chance of having full coverage using flows with a lower length. As an example, with five monitoring nodes, all links delays can be measured with flows of length lower than 5 hops (in both topologies); While this value is 12 in Abilene (and 9 in RedIRIS) when there is only one monitoring node.
 On the other hand, allowing MLMF to increase, reduces the number of required monitoring nodes to reach full coverage. 
 
 \begin{figure}
@@ -930,48 +930,82 @@ On the other hand, allowing MLMF to increase, reduces the number of required mon
 
 It should be mentioned that having a relatively high MLMF (in this example 11), all links could be monitored with a few number of monitoring nodes (in this example, one monitoring node). However, this is not desirable because increasing MLMF may increase the optimality gap or configuration overhead. On the other hand, increasing the number of monitoring nodes above a number where a relatively low MLMF covers all links, is not necessary. This is because after this point, increasing the number of monitoring flow only increases the complexity of algorithm. 
 \begin{figure}
-    \centering
-    \includegraphics[width=0.8\columnwidth]{img/eval_Abilene_bar_min_length_of_routes_with_different_monitoring_nodes.png}
+    \begin{subfigure}{\columnwidth}
+       \centering
+        \includegraphics[width=0.8\columnwidth]{img/eval_Abilene_bar_min_length_of_routes_with_different_monitoring_nodes.png}
+        % \caption{Abilene}
+        \label{fig:ABI_bar_min_MLMF_full_cover}
+    \end{subfigure}
+    \begin{subfigure}{\columnwidth}
+      \centering
+      \includegraphics[width=0.8\columnwidth]{img/eval_Rediris_bar_min_length_of_routes_with_different_monitoring_nodes.png}
+    %  \caption{RedIRIS}
+     \label{fig:RED_bar_min_MLMF_full_cover}
+    \end{subfigure}
     \caption{Minimum MLMF for full coverage}
     \label{fig:bar_min_MLMF_full_cover}
 \end{figure}
 Fig.~\ref{fig:bar_min_MLMF_full_cover}, represents the minimum MLMF that can cover all links versus the number of monitoring nodes. The higher the number of monitoring nodes, the lower the minimum of MLMF becomes. This happens because increasing the number of monitoring nodes, reduces the maximum distance of links from monitoring nodes. Consequently, with a lower MLMF, one can monitor the desired links in the network. %After a threshold, increasing the number of monitoring nodes does not impact the minimum MLMF for a while.
 
 \subsection{Execution Time}\label{subsec:eval_exec_time}
-The execution time of the proposed solution depends on two main components: PFS and DVC. In the following the execution time of these components is discussed. Fig.~\ref{fig:Abilene_time_PFS}, depicts the execution time of PFS versus the maximum allowed length of probe flows. In this plot, five different scenarios of Abilene topology (by changing the number of monitoring nodes) is considered. Increasing the possible length of monitoring flows, increases the search space for the algorithm, therefore, increasing the max length of routes increases execution time. On the other hand, increasing the number of monitoring nodes, increases the number of possible combination of monitoring flows. Again, this increases the search area and consequently increases the execution time. It should be considered that decreasing the number of monitoring nodes, may end up to increase the Maximum Length of Monitoring Flows (MLMF). Otherwise, some links will not be covered in the measurement.
+The execution time of the proposed solution depends on two main components: PFS and DVC. In the following the execution time of these components is discussed. Fig.~\ref{fig:Abilene_time_PFS}, depicts the execution time of PFS versus the maximum allowed length of probe flows. In this plot, five different scenarios of Abilene and RedIRIS topologies (by changing the number of monitoring nodes) are considered. Increasing the possible length of monitoring flows, increases the search space for the algorithm, therefore, increasing the max length of routes increases execution time. On the other hand, increasing the number of monitoring nodes, increases the number of possible combination of monitoring flows. Again, this increases the search area and consequently increases the execution time. It should be considered that decreasing the number of monitoring nodes, may end up to increase the Maximum Length of Monitoring Flows (MLMF). Otherwise, some links will not be covered in the measurement. The execution time of PFS in RedIRIS is significantly higher than Abilene. This happens because the number of nodes in RedIRIS is dramatically higher than Abilene which makes the search space bigger. It should be mentioned that this part is an offline and one-time part. This means that we need to run PFS just once and before starting the measurement. Besides, this algorithm is capable of being fully paralleled which makes it significantly faster.
 
 \begin{figure}
-    \centering
-    \includegraphics[width=0.8\columnwidth]{img/eval_Abilene_Max_Length_of_Routes_Execution_time_ILP.png}
-    \caption{Execution Time of PFS}
+    \begin{subfigure}{\columnwidth}
+       \centering
+        \includegraphics[width=0.8\columnwidth]{img/eval_Abilene_Max_Length_of_Routes_Execution_time_ILP.png}
+    \end{subfigure}
+    \begin{subfigure}{\columnwidth}
+      \centering
+      \includegraphics[width=0.8\columnwidth]{img/eval_Rediris_Max_Length_of_Routes_Execution_time_ILP.png}
+    \end{subfigure}
+    \caption{Execution Time of PFS (Offline part)}
     \label{fig:Abilene_time_PFS}
 \end{figure}
 
-Fig.~\ref{fig:Abilene_time_DMI} represents execution time of DVC versus the maximum length of monitoring flows (MLMF). Similar to Fig.~\ref{fig:Abilene_time_PFS}, five different scenarios are considered. In this plot, some lines start from the middle of x-axis meaning that the algorithm couldn't cover all links with a MLMF less than that point. For example, the line showing "2 Monitoring nodes" starts from x=10, this means that at least MLMF should be 10 to cover all links with only 2 monitoring nodes.
+Fig.~\ref{fig:Abilene_time_DMI} represents the execution time of DVC versus the maximum length of monitoring flows (MLMF). Similar to Fig.~\ref{fig:Abilene_time_PFS}, five different scenarios are considered. In this plot, some lines start from the middle of x-axis meaning that the algorithm could not cover all links with an MLMF less than that point. For example, the line showing "2 Monitoring nodes" starts from x=10, this means that at least MLMF should be 10 to cover all links with only 2 monitoring nodes. Since the number of flows is always kept below a threshold, the execution time of DVC is almost the same for different values of MLMF. On the other hand, it is linearly related to the number of investigated links, i.e., the number of routing nodes and the topology.
 
 \begin{figure}
-    \centering
-    \includegraphics[width=0.8\columnwidth]{img/eval_Abilene_Max_Length_of_Routes_Execution_time_PSO.png}
-    \caption{Execution Time of DVC}
+    \begin{subfigure}{\columnwidth}
+       \centering
+        \includegraphics[width=0.8\columnwidth]{img/eval_Abilene_Max_Length_of_Routes_Execution_time_PSO.png}
+    \end{subfigure}
+    \begin{subfigure}{\columnwidth}
+      \centering
+      \includegraphics[width=0.8\columnwidth]{img/eval_Rediris_Max_Length_of_Routes_Execution_time_PSO.png}
+    \end{subfigure}
+    \caption{Execution Time of DVC (online part)}
     \label{fig:Abilene_time_DMI}
-\end{figure}
+\end{figure} 
 
 \subsection{Monitoring accuracy and error}\label{subsec:eval_accuracy_and_error}
 In this subsection, the monitoring accuracy and the corresponding error is discussed. Fig.~\ref{fig:sum_delay_abilene}, shows the summation of all link delay errors versus MLMF for different number of monitoring nodes. Some lines not appears from the beginning of x-axis. This means that before that point, the algorithm could not fully cover all links, i.e., some links are not monitored. This is directly related to the relation of MLMF and number of monitoring nodes. With a low MLMF value a higher number of monitoring flows should be used to cover all links. On the other hand, increasing the number of monitoring nodes decreases the overall error but in cost of increasing the monitoring cost (resources).
 % mean and overall accuracy, mean and overall error, summation of all links error, real vs estimated link delay per link.
 \begin{figure}
-    \centering
-    \includegraphics[width=.8\columnwidth]{img/eval_Abilene_Max_Length_of_Summation_of_All_Links_Error.png}
+    \begin{subfigure}{\columnwidth}
+       \centering
+        \includegraphics[width=.8\columnwidth]{img/eval_Abilene_Max_Length_of_Summation_of_All_Links_Error.png}
+    \end{subfigure}
+    \begin{subfigure}{\columnwidth}
+      \centering
+      \includegraphics[width=.8\columnwidth]{img/eval_Rediris_Max_Length_of_Summation_of_All_Links_Error.png}
+    \end{subfigure}
     \caption{Average of all link errors.}
     \label{fig:sum_delay_abilene}
-\end{figure}
+\end{figure} 
 Similarly, Fig.~\ref{fig:max_error_abilen} presents maximum error among all monitored links versus MLMF considering different number of monitoring nodes. Although increasing MLMF decreases the error, the impact is not significant. To understand this, we should mention that increasing the length of monitoring flows may end up to a higher error rate, however, MLMF is not the length of monitoring flows but the maximum length of monitoring flows. In other words, if MLMF is four then monitoring flows with a length of one, two, three, or four are acceptable. Therefore, increasing MLMF does not increase the error, however, since using a higher length of monitoring flows may end up to a higher measuring error, the impact of increasing MLMF on error rate is not significant.
 \begin{figure}
-    \centering
-    \includegraphics[width=.8\columnwidth]{img/eval_Abilene_Max_Length_of_Max_error_per_one_link.png}
+    \begin{subfigure}{\columnwidth}
+       \centering
+        \includegraphics[width=.8\columnwidth]{img/eval_Abilene_Max_Length_of_Max_error_per_one_link.png}
+    \end{subfigure}
+    \begin{subfigure}{\columnwidth}
+      \centering
+      \includegraphics[width=.8\columnwidth]{img/eval_Rediris_Max_Length_of_Max_error_per_one_link.png}
+    \end{subfigure}
     \caption{Max error per link.}
     \label{fig:max_error_abilen}
-\end{figure}
+\end{figure} 
 Fig.~\ref{fig:real_delay_abile}, provides a closer look to per-link delay accuracy with a different number of monitoring flows. This plot shows the measured delay using 1-5 monitoring nodes versus the delay configured in Mininet for every link. As we have IPerf generating traffic in the background, we do not consider delay assigned to a link when creating the topology in Mininet. Instead, ping\footnote{Since we are emulating our solution on Mininet, the measurement accuracy should be equal or bigger than ms (ping has this accuracy).} is used to measure every link delays (by having a host connected to each switches). As discussed earlier, the higher the number of monitoring nodes, the better the measurement. It is worth mentioning that although the accuracy of one-monitoring node scenario is higher than the accuracy of two-monitoring nodes scenario in some links, the overall accuracy of two-monitoring nodes is higher. 
 
 \begin{figure}
