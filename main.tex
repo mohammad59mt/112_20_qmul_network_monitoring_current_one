@@ -194,7 +194,7 @@
 \begin{abstract}
 Current IP based networks support a wide range of delay-sensitive applications such as live video streaming of network gaming. Providing an adequate quality of experience to these applications is of paramount importance for a network provider. The offered services are often regulated by tight Service Level Agreements (SLAs) that needs to be continuosly monitored.
 %In modern networks, the amount of delay-sensitive traffic, such as live video streaming, network gaming, and robot-driven flows, has been increased dramatically. Simultaneously, by the emergence of IoT, the importance of these types of traffic is growing rapidly. Therefore, improving the quality of service based on SLA comes to be an important field of study in networking.
-In facts, the first step to guarantee a metric is to measure it. Hence, delay measurement becomes a fundamental operation for a network provider. In many cases, the operator needs to measure the delay on all network links. We refer to the collection of all link delays as the \textit{link delay vector} (LDV). Typical solutions to collect the LDV impose a substantial overhead on the network. In this paper, we propose a solution to measure the LDV in real-time with a low-overhead approach. In particular, we inject some flows into the network and infer the LDV based on the delay of those flows. To this end, the monitoring flows and their paths should be selected minimizing the network monitoring overhead. In this respect, the challenging issue is to select a proper combination of flows such that by knowing their delay it is possible to solve a set of linear equation and obtain a unique LDV. This combination of monitoring flows should be optimal according to some criteria and should met some feasibility constraints. We first propose a mathematical formulation to select the optimal combination of flows, in form of Integer Linear Programming (ILP) problem. Then we develop a heuristic algorithm to overcome the high computational complexity of existing ILP solvers. As a further step, we propose a meta-heuristic algorithm to solve the above-mentioned equations and infer the LDV. The challenging part of this step is the volatility of link delays. The proposed solution is evaluated over real-world emulated network topologies using the Mininet network emulator. Emulation results show the accuracy of the proposed solution with a negligible networking overhead in a real time manner.
+Since the first step to guarantee a metric is to measure it, delay measurement becomes a fundamental operation for a network provider. In many cases, the operator needs to measure the delay on all network links. We refer to the collection of all link delays as the Link Delay Vector (LDV). Typical solutions to collect the LDV impose a substantial overhead on the network. In this paper, we propose a solution to measure the LDV in real-time with a low-overhead approach. In particular, we inject some flows into the network and infer the LDV based on the delay of those flows. To this end, the monitoring flows and their paths should be selected minimizing the network monitoring overhead. In this respect, the challenging issue is to select a proper combination of flows such that by knowing their delay it is possible to solve a set of a linear equation and obtain a unique LDV. This combination of monitoring flows should be optimal according to some criteria and should meet some feasibility constraints. We first propose a mathematical formulation to select the optimal combination of flows, in form of Integer Linear Programming (ILP) problem. Then we develop a heuristic algorithm to overcome the high computational complexity of existing ILP solvers. As a further step, we propose a meta-heuristic algorithm to solve the above-mentioned equations and infer the LDV. The challenging part of this step is the volatility of link delays. The proposed solution is evaluated over real-world emulated network topologies using the Mininet network emulator. Emulation results show the accuracy of the proposed solution with a negligible networking overhead in a real-time manner.
 \end{abstract}	
 \begin{IEEEkeywords} 
     Active Network Monitoring, Real-Time Measurement, Link Delay Vector;
@@ -621,7 +621,7 @@ In this subsection, the problem is to take a list of end-to-end delays and routi
 		\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}\hline
 			1.2 & 1.0 & 0.5 & 0.8 & 2 & 1.5 & 0.4 & 0.3 & 0.8 & 1.1\\\hline
 		\end{tabular}
-		\caption{An particle in the proposed PSO algorithm showing the delay of 10 links. In this example, the measurement unit for all values is considered to be millisecond.}
+		\caption{A particle in the proposed PSO algorithm showing the delay of 10 links. In this example, the measurement unit for all values is considered to be millisecond.}
 		\label{fig:particle}
 	\end{center}%\vspace{-20px}
 \end{figure}
@@ -1070,9 +1070,9 @@ Fig.~\ref{fig:eval_Abilene_summation_of_all_links_delay_error_ms_bar_chart} show
     \label{fig:eval_Abilene_summation_of_all_links_delay_error_ms_bar_chart}
 \end{figure}
 
-\textcolor{red}{THIS SECTION MAYBE REMOVED FROM THE PAPER}
 \subsection{Networking Overhead}\label{subsec:eval_monitoring_overhead}
-In order to route monitoring flows, we need to push rules into the switches. Since the length of the switch flow-table is limited, the number of pushed rules can be considered as a metric to measure the monitoring overhead. The relation between the number of monitoring rules and MLMF is illustrated in Figs.~\ref{fig:required_rules}. Similarly, Fig.~\ref{fig:required_flows} depicts the number of monitoring flows versus MLMF for different number of monitoring nodes. 
+In order to route monitoring flows, we need to push rules into the switches. Since the length of the switch flow-table is limited, the number of different flows (which impact the number of pushed rules) can be considered as a metric to measure the monitoring overhead. %The relation between the number of monitoring rules and MLMF is illustrated in Figs.~\ref{fig:required_rules}. Similarly, 
+Fig.~\ref{fig:required_flows} depicts the number of monitoring flows versus MLMF for different number of monitoring nodes. 
 \begin{figure}
     \begin{subfigure}{0.48\columnwidth}
       \centering
@@ -1085,31 +1085,36 @@ In order to route monitoring flows, we need to push rules into the switches. Sin
     \caption{Monitoring Overhead - Number of monitoring flows}
     \label{fig:required_flows}
 \end{figure}
-
 When the number of monitoring nodes increases, the number of monitoring flows increases as well ending up with an increment in the monitoring overhead increases. Similarly, increasing MLMF increases the number of monitoring flows and consequently the monitoring overhead. It is worth mentioning that increasing MLMF beyond a threshold does not impact the overhead. This threshold is the maximum distance between each pair of switches. This happens because beyond that point, increasing the length of monitoring flows causes unwanted loop in the route, therefore, those flows will not be considered.
+% \begin{figure}
+%     \begin{subfigure}{0.48\columnwidth}
+%       \centering
+%       \includegraphics[width=\columnwidth]{img/eval_Abilene_Max_Length_of_Routes_Number_of_Required_Rules.png}
+%     \end{subfigure}
+%     \begin{subfigure}{0.49\columnwidth}
+%       \centering
+%       \includegraphics[width=\columnwidth]{img/eval_Rediris_Max_Length_of_Routes_Number_of_Required_Rules.png}
+%     \end{subfigure}
+%     \caption{Monitoring Overhead - Number of rules}
+%     \label{fig:required_rules}
+% \end{figure}
+% In order to calculate percent of flow entry of switch overhead it is need to know the Open vSwitch rules capacity. According to ~\cite{ovsdoc}, Open vSwitch has tables 0-255; Since table 255 is for special commands like delete and delete all, so 255 tables are available to use. Also, In Open vSwitch each table has 256 row, so Open vSwitch rule (flow entry) capacity is 255*256 = 65280.
+% Fig.~\ref{fig:eval_barchart_Average_Percent_of_Rules_to_Switch_Rule_Capacity_Ratio_max_len_of_route_11} demonstrates occupied rule capacity by monitoring in number(bar chart) and percent(line chart).
+Finally, fig.~\ref{fig:eval_barchart_Average_Percent_of_Rules_to_Switch_Rule_Capacity_Ratio_max_len_of_route_11} represent the network overhead of the proposed monitoring solution. In this plot, the average number of monitoring rules per switch versus the number of monitoring nodes are represented using left y-axis while the right y-axis shows the percentage of monitoring rules over the total capacity of the switches. Increasing the number of monitoring flows increases the network overhead, however, the percentage of the monitoring rules over the total capacity of the switch in the worse case is $0.1\%$ for Abilene and $0.3\%$ for RedIRIS which is negligible.
 \begin{figure}
     \begin{subfigure}{0.48\columnwidth}
       \centering
-      \includegraphics[width=\columnwidth]{img/eval_Abilene_Max_Length_of_Routes_Number_of_Required_Rules.png}
+      \includegraphics[width=\columnwidth]{img/eval_Abilene_barchart_Average_Percent_of_Rules_to_Switch_Rule_Capacity_Ratio_max_len_of_route_11.png}
     \end{subfigure}
     \begin{subfigure}{0.49\columnwidth}
       \centering
-      \includegraphics[width=\columnwidth]{img/eval_Rediris_Max_Length_of_Routes_Number_of_Required_Rules.png}
+      \includegraphics[width=\columnwidth]{img/eval_Rediris_barchart_Average_Percent_of_Rules_to_Switch_Rule_Capacity_Ratio_max_len_of_route_11.png}
     \end{subfigure}
-    \caption{Monitoring Overhead - Number of rules}
-    \label{fig:required_rules}
-\end{figure}
-% In order to calculate percent of flow entry of switch overhead it is need to know the Open vSwitch rules capacity. According to ~\cite{ovsdoc}, Open vSwitch has tables 0-255; Since table 255 is for special commands like delete and delete all, so 255 tables are available to use. Also, In Open vSwitch each table has 256 row, so Open vSwitch rule (flow entry) capacity is 255*256 = 65280.
-% Fig.~\ref{fig:eval_barchart_Average_Percent_of_Rules_to_Switch_Rule_Capacity_Ratio_max_len_of_route_11} demonstrates occupied rule capacity by monitoring in number(bar chart) and percent(line chart).
-Finally, fig.~\ref{fig:eval_barchart_Average_Percent_of_Rules_to_Switch_Rule_Capacity_Ratio_max_len_of_route_11} represent the network overhead of the proposed monitoring solution. In this plot, the average number of monitoring rules per switch versus the number of monitoring nodes are represented using left y-axis while the right y-axis shows the percentage of monitoring rules over the total capacity of the switches. Increasing the number of monitoring flows increases the network overhead, however, the percentage of the monitoring rules over the total capacity of the switch in the worse case is $0.3\%$ which is negligible.
-\begin{figure}
-    \centering
-    \includegraphics[width=\columnwidth]{img/eval_Abilene_barchart_Average_Percent_of_Rules_to_Switch_Rule_Capacity_Ratio_max_len_of_route_11.png}
     \caption{Monitoring Overhead - Average number of rules per switch, MLMF=11}
     \label{fig:eval_barchart_Average_Percent_of_Rules_to_Switch_Rule_Capacity_Ratio_max_len_of_route_11}
 \end{figure}
 
-\subsection{Complexity Overhead}
+% \subsection{Complexity Overhead}
 \section*{Acknowledgment}
 This work has received funding from the EPSRC project EARL. Moreover, the work is supported by Horizon 2020 EU project SUPERFLUIDITY (grant agreement No. 671566).
 
